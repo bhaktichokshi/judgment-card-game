@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Judgement Card Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Judgement — Multiplayer</h1>
+        <div class="header-meta">
+          <p class="tagline">Create a private room, invite friends, and play online.</p>
+          <button id="audio-toggle" type="button" class="audio-toggle" aria-label="Toggle lobby music">
+            🔊 Music On
+          </button>
+        </div>
+      </header>
+
+      <section id="auth-section">
+        <div class="panel">
+          <h2>Create Room</h2>
+          <form id="create-room-form">
+            <label>
+              Host name
+              <input type="text" id="create-host-name" required />
+            </label>
+            <label>
+              Starting hand size
+              <select id="create-base-hand">
+                <option value="8" selected>8 cards (max 6 players)</option>
+                <option value="16">16 cards (max 3 players)</option>
+                <option value="4">4 cards (max 12 players)</option>
+              </select>
+            </label>
+            <button type="submit">Create</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h2>Join Room</h2>
+          <form id="join-room-form">
+            <label>
+              Room code
+              <input type="text" id="join-room-code" maxlength="4" required />
+            </label>
+            <label>
+              Player name
+              <input type="text" id="join-player-name" required />
+            </label>
+            <button type="submit">Join</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="game-section" class="hidden">
+        <div class="game-layout">
+          <div class="summary-grid">
+            <div class="panel user-panel">
+              <h2>Room</h2>
+              <p>
+                Room code:
+                <span class="code" id="room-code-display">---- </span>
+              </p>
+              <p>
+                You are signed in as <span id="player-name-display"></span>
+                <button id="leave-room-btn" type="button" class="link-button">Leave room</button>
+              </p>
+              <p>
+                Base hand:
+                <span id="base-hand-display">—</span> cards · Max players
+                <span id="base-hand-max">—</span>
+              </p>
+              <div id="players-list"></div>
+              <button id="start-game-btn" type="button">Start game</button>
+              <p id="game-status"></p>
+            </div>
+
+            <div class="panel round-panel">
+              <h2>Round</h2>
+              <div id="round-info">
+                <p>Waiting for game to start…</p>
+              </div>
+              <div id="bid-summary" class="info-block hidden"></div>
+            </div>
+
+            <div class="panel scoreboard-panel" id="round-scoreboard-panel">
+              <div class="panel-heading">
+                <h2>Round Scoreboard</h2>
+                <button id="open-history-btn" type="button" class="secondary">Past games</button>
+              </div>
+              <div id="round-scoreboard"></div>
+            </div>
+          </div>
+
+          <div class="panel play-panel">
+            <h2>Current Round</h2>
+            <div id="bidding-controls" class="interaction hidden">
+              <h3>Your bid</h3>
+              <div class="button-row" id="bid-options"></div>
+            </div>
+            <div id="play-controls" class="interaction hidden">
+              <h3>Your hand</h3>
+              <div class="hand" id="player-hand"></div>
+            </div>
+            <div id="current-trick" class="current-trick-panel"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="overlay-backdrop" class="overlay-backdrop hidden"></div>
+    <section id="history-overlay" class="overlay hidden" aria-hidden="true">
+      <div class="overlay-content">
+        <header class="overlay-header">
+          <h3>Scoreboard History</h3>
+          <button id="close-history-btn" type="button" class="icon-button" aria-label="Close">
+            ×
+          </button>
+        </header>
+        <div class="overlay-body" id="scoreboard-entries"></div>
+      </div>
+    </section>
+
+    <template id="player-row-template">
+      <div class="player-row">
+        <div class="player-name"></div>
+        <div class="player-score"></div>
+        <div class="player-bids"></div>
+      </div>
+    </template>
+
+    <script src="/static/app.js" type="module"></script>
+  </body>
+</html>
